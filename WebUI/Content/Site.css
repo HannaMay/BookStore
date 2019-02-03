@@ -1,0 +1,110 @@
+﻿body {
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    width: 100%;
+    vertical-align: middle;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.list-group {
+    margin-top: 20px;
+    margin-left: 30px;
+    padding: 0;
+}
+
+.header-basket {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.img-block {
+    width: 20%;
+    text-align: center;
+    align-self: center;
+}
+
+.desc-book {
+    padding: 15px;
+    width: 75%;
+    display: block;
+    margin-left: 15px;
+}
+
+.header-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.list-group .btn {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-radius: 10px;
+}
+
+.current-btn {
+    background: #eb6864;
+    border-color: #e53c37;
+}
+
+.card-title {
+    width: 70%;
+}
+
+.card {
+    flex-direction: row; 
+    border: 0;
+    border-radius: 15px;
+}
+
+.desc-book {
+    font-size: 28px;
+}
+
+span, p, .lead {
+    font-size: 18px;
+    padding: 0;
+}
+
+.lead {
+    line-height: 20px;
+}
+
+.paginaor {
+    display: flex;
+    justify-content: flex-end;
+    max-width: 1215px;
+}
+
+.bnt-basket {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.tabel-footer {
+    text-align: end;
+}
+
+.basket-desc {
+    color: white;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.basket-info {
+    display: flex;
+    align-items:baseline;
+}

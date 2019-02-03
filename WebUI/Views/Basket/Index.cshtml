@@ -1,0 +1,51 @@
+﻿@model WebUI.Models.BasketIndexViewModel
+@{
+    ViewBag.Title = "Ваша корзина";
+}
+
+<div class="header-basket">
+    <h2>@ViewBag.Title</h2>
+    <a href="@Model.ReturnUrl" class="btn btn-info">Продолжить покупки</a>
+</div>
+
+<table id="basketTable" class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Сумма</th>
+            <th scope="col">Удалить</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var good in Model.Basket.GetGoods)
+        {
+            <tr>
+                <th scope="row">
+                    @good.Book.Name
+                    <br>
+                    @good.Book.Author
+                </th>
+                <td>
+                    @good.Quantity                    
+                </td>
+                <td>@good.Book.Price руб.</td>
+                <td>@(good.Quantity * good.Book.Price) руб.</td>
+                <td>
+                    @using (Html.BeginForm("RemoveFromBasket", "Basket"))
+                    {
+                        @Html.Hidden("BookId", good.Book.BookId)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        <input type="submit" class="btn btn-danger" value="Удалить" title="Удалить товар из корзины" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr class="tabel-footer">
+            <td colspan="5"><b>Товаров на сумму: @Model.Basket.TotalSum()  руб.</b></td>
+        </tr>
+    </tfoot>
+</table>

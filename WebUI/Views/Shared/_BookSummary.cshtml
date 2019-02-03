@@ -1,0 +1,39 @@
+﻿@model Domain.Entities.Book
+
+<div class="card container  bg-secondary">
+    <div class="img-block">
+        <img src="#" alt="Book img" />
+    </div>
+    <div class="desc-book">
+        <div class="header-block">
+            <h3 class="card-title">
+                @Model.Name
+            </h3>
+            <h4 id="price" class="badge badge-info">
+                @Model.Price руб.
+            </h4>
+        </div>
+        <div class="menu-block">
+            <p class="lead"><b>Издатель:</b> @Model.Publisher</p>
+            <p class="lead"><b>Автор:</b> @Model.Author</p>
+            <p class="lead"><b>Год издания:</b> @Model.PublishYear</p>
+            <span class="lead">
+                <b>
+                    Описание:
+                </b>
+            </span>
+            <p class="lead">@Model.Description</p>
+        </div>
+        <div>
+            @using (Html.BeginForm("AddToBasket", "Basket"))
+            {
+            <div class="bnt-basket">
+                @Html.HiddenFor(x => x.BookId)
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                <input type="submit" class="btn btn-success" value="Добавить в корзину" />
+            </div>
+            }
+        </div>
+    </div>
+</div>
+

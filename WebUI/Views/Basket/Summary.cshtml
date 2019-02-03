@@ -1,0 +1,16 @@
+﻿@model Domain.Entities.Basket
+
+<div class="basket-info">
+    <div class="basket-desc">
+        <b>Ваша корзина: </b>
+        @Model.GetGoods.Sum(x => x.Quantity) шт.
+        @Model.TotalSum().ToString() руб.
+    </div>
+
+    <div class="navbar-brand">
+        @Html.ActionLink("Заказать", "Index", "Basket",
+        new { returnUrl = Request.Url.PathAndQuery },
+        new { @class = "btn btn-success" })
+
+    </div>
+</div>

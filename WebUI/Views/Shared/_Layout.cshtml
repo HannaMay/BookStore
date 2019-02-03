@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-reboot.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap1.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    @*<script src="~/Scripts/modernizr-2.6.2.js"></script>*@
+    <style>
+        .navbar-brand {
+            color: white;
+        }
+
+        .header-shop {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-expand-lg navbar-dark bg-primary" role="navigation">
+        <div class="header-shop">
+            @Html.ActionLink("BookStore - книжный магазин", "List", "Books", null, new { @class = "navbar-brand" })
+            @Html.Action("Summary", "Basket")
+        </div>       
+    </div>
+    <div class="row">
+        <div id="genres" class="col-2 list-group">
+            @Html.Action("Menu", "Nav")
+        </div>
+        <div class="col-8">
+            @RenderBody()
+        </div>
+    </div>
+
+    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>*@
+</body>
+</html>
