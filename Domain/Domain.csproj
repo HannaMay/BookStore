@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -69,10 +70,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IBookRepository.cs" />
+    <Compile Include="Abstract\IOrderProcessor.cs" />
     <Compile Include="Concreate\EFBookRepository.cs" />
     <Compile Include="Concreate\EFDbContext.cs" />
+    <Compile Include="Concreate\EmailOrderProcessor.cs" />
     <Compile Include="Entities\Book.cs" />
     <Compile Include="Entities\Basket.cs" />
+    <Compile Include="Entities\DeliveryDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

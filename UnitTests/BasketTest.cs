@@ -141,7 +141,7 @@ namespace UnitTests
             }.AsQueryable());
 
             Basket basket = new Basket();
-            BasketController controller = new BasketController(mock.Object);
+            BasketController controller = new BasketController(mock.Object, null);
 
             //Действия
             controller.AddToBasket(basket, 1, null);
@@ -163,7 +163,7 @@ namespace UnitTests
             }.AsQueryable());
 
             Basket basket = new Basket();
-            BasketController controller = new BasketController(mock.Object);
+            BasketController controller = new BasketController(mock.Object, null);
 
             //Действия          
             
@@ -180,7 +180,7 @@ namespace UnitTests
         {
             //Организация
             Basket basket = new Basket();
-            BasketController target = new BasketController(null);
+            BasketController target = new BasketController(null, null);
 
             //Действия
             BasketIndexViewModel result = (BasketIndexViewModel)target.Index(basket, "myUrl").ViewData.Model;          
@@ -202,7 +202,7 @@ namespace UnitTests
             }.AsQueryable());
 
             Basket basket = new Basket();
-            BasketController controller = new BasketController(mock.Object);
+            BasketController controller = new BasketController(mock.Object, null);
 
             //Действия
             controller.AddToBasket(basket, 1, null);
@@ -212,6 +212,30 @@ namespace UnitTests
             Assert.AreEqual(basket.GetGoods.Count(), 0);
             //Assert.AreEqual(basket.GetGoods.ToList()[0].Book.BookId, 1);
         }
+        
+        [TestMethod]
+        
+        //удаление товара из корзину пользователя
+        public void Cannot_Checkout_Empty_Basket()
+        {
+            //Организация
+            Mock<IOrderProcessor> mockorder = new Mock<IOrderProcessor>();
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(m => m.Books).Returns(new List<Book>
+            {
+                new Book { BookId = 1, Name = "Book1", Price = 12 }
+            }.AsQueryable());
 
+            Basket basket = new Basket();
+            BasketController controller = new BasketController(mock.Object, null);
+
+            //Действия
+            controller.AddToBasket(basket, 1, null);
+            controller.RemoveFromBasket(basket, 1, null);
+
+            //Утверждение
+            Assert.AreEqual(basket.GetGoods.Count(), 0);
+            //Assert.AreEqual(basket.GetGoods.ToList()[0].Book.BookId, 1);
+        }
     }
 }   

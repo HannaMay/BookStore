@@ -8,6 +8,7 @@ using Moq;
 using Domain.Abstract;
 using Domain.Entities;
 using Domain.Concreate;
+using System.Configuration;
 
 namespace WebUI.Infrastructure
 {
@@ -78,6 +79,13 @@ namespace WebUI.Infrastructure
             */
 
             kernel.Bind<IBookRepository>().To<EFBookRepository>();
+
+            EmailSettings emailSettings = new EmailSettings
+            {
+                WriteAsFile  = bool.Parse(ConfigurationManager.AppSettings["Email.WriteAsFile"] ?? "false" )
+            };
+
+            kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>().WithConstructorArgument("settings", emailSettings);
         }
 
         public object GetService(Type serviceType)

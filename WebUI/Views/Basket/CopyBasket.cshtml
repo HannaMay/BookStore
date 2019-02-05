@@ -1,0 +1,34 @@
+﻿@model WebUI.Models.BasketIndexViewModel
+
+<table id="basketTable" class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Сумма</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var good in Model.Basket.GetGoods)
+        {
+            <tr>
+                <th scope="row">
+                    @good.Book.Name
+                    <br>
+                    @good.Book.Author
+                </th>
+                <td>
+                    @good.Quantity
+                </td>
+                <td>@good.Book.Price руб.</td>
+                <td>@(good.Quantity * good.Book.Price) руб.</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr class="tabel-footer">
+            <td colspan="4"><b>Товаров на сумму: @Model.Basket.TotalSum()  руб.</b></td>
+        </tr>
+    </tfoot>
+</table>
