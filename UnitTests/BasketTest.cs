@@ -189,53 +189,70 @@ namespace UnitTests
             Assert.AreSame(result.Basket, basket);
             Assert.AreEqual(result.ReturnUrl, "myUrl");
         }
-
-        [TestMethod]
-        //удаление товара из корзину пользователя
-        public void Can_Remove_From_Basket()
-        {
-            //Организация
-            Mock<IBookRepository> mock = new Mock<IBookRepository>();
-            mock.Setup(m => m.Books).Returns(new List<Book>
-            {
-                new Book { BookId = 1, Name = "Book1", Price = 12 }
-            }.AsQueryable());
-
-            Basket basket = new Basket();
-            BasketController controller = new BasketController(mock.Object, null);
-
-            //Действия
-            controller.AddToBasket(basket, 1, null);
-            controller.RemoveFromBasket(basket, 1, null);
-
-            //Утверждение
-            Assert.AreEqual(basket.GetGoods.Count(), 0);
-            //Assert.AreEqual(basket.GetGoods.ToList()[0].Book.BookId, 1);
-        }
         
         [TestMethod]
         
-        //удаление товара из корзину пользователя
+        //проверка на пустую корзину пользователя
         public void Cannot_Checkout_Empty_Basket()
         {
             //Организация
-            Mock<IOrderProcessor> mockorder = new Mock<IOrderProcessor>();
-            Mock<IBookRepository> mock = new Mock<IBookRepository>();
-            mock.Setup(m => m.Books).Returns(new List<Book>
-            {
-                new Book { BookId = 1, Name = "Book1", Price = 12 }
-            }.AsQueryable());
-
+            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
             Basket basket = new Basket();
-            BasketController controller = new BasketController(mock.Object, null);
+            DeliveryDetails delivery = new DeliveryDetails();
+
+            BasketController controller = new BasketController(null, mock.Object);
+
+            ViewResult viewResult = controller.Checkout(basket, delivery);
 
             //Действия
-            controller.AddToBasket(basket, 1, null);
-            controller.RemoveFromBasket(basket, 1, null);
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Basket>(), It.IsAny<DeliveryDetails>()), Times.Never());          
+            
+            //Утверждение
+            Assert.AreEqual("", viewResult.ViewName);
+            Assert.AreEqual(false, viewResult.ViewData.ModelState.IsValid); 
+        }
+
+        [TestMethod]
+
+        //проверка на пустую корзину пользователя
+        public void Cannot_Checkout_Invalid_ShippingDetails()
+        {
+            //Организация
+            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
+            Basket basket = new Basket();
+            basket.AddItem(new Book(), 1);
+
+            BasketController controller = new BasketController(null, mock.Object);
+            controller.ModelState.AddModelError("error", "error");
+
+            ViewResult viewResult = controller.Checkout(basket, new DeliveryDetails());
+
+            //Действия
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Basket>(), It.IsAny<DeliveryDetails>()), Times.Never());
 
             //Утверждение
-            Assert.AreEqual(basket.GetGoods.Count(), 0);
-            //Assert.AreEqual(basket.GetGoods.ToList()[0].Book.BookId, 1);
+            Assert.AreEqual("", viewResult.ViewName);
+            Assert.AreEqual(false, viewResult.ViewData.ModelState.IsValid);
+        }
+        
+        [TestMethod]
+        public void Cannot_Checkout_Add_SubmitOrder()
+        {
+            //Организация
+            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
+            Basket basket = new Basket();
+            basket.AddItem(new Book(), 1);
+            BasketController controller = new BasketController(null, mock.Object);          
+            ViewResult result = controller.Checkout(basket, new DeliveryDetails());
+                
+            //Действия
+            
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Basket>(), It.IsAny<DeliveryDetails>()), Times.Once());
+
+            //Утверждение
+            Assert.AreEqual("Completed", result.ViewName);
+            Assert.AreEqual(true, result.ViewData.ModelState.IsValid);              
+            
         }
     }
 }   

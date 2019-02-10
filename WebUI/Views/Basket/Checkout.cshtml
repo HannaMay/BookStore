@@ -5,128 +5,107 @@
 }
 
 <h2 class="title-order">Оформление заказа</h2>
-<form method="post" class="form-order">
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
     <fieldset class="order-fieldset">
-        <legend class="order-legend">
-            Информация для оплаты и доставки заказа
-        </legend>
+        <legend class="order-legend"> Информация для оплаты и доставки заказа </legend>
         <span>
-            <b>
-                Личные данные
-            </b>
+            <b> Личные данные</b>
         </span>
         <p class="order-block">
-            <label>
-                Ф.И.О <sup>*</sup>
-            </label>
-            @*@Html.TextBoxFor(x => x.FIO, new {@class= "form-control order-input-personal" })*@
-            <input class="form-control order-input-personal" type="text" value="@Model.FIO" autofocus required />
+            <label> Ф.И.О <sup>*</sup> </label>
+            @Html.TextBoxFor(x => x.FIO, new {@class= "form-control order-input-personal" })
+            @*<input class="form-control order-input-personal" type="text" value="@Model.FIO" autofocus required />*@
         </p>
         <p class="order-block">
-            <label>
-                E-mail <sup>*</sup>
-            </label>
-            <input class="form-control order-input-personal" value="@Model.Email" aria-describedby="emailHelp" type="email" required />
+            <label> E-mail <sup>*</sup> </label>
+            @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+            @*<input class="form-control order-input-personal" value="@Model.Email" aria-describedby="emailHelp" type="email" required />*@
             <small id="emailHelp" class="form-text text-muted">Мы никогда не используем ваш e-mail в коммерческих целях </small>
         </p>
         <p class="order-block">
-            <label>
-                Телефон (обратите внимание на формат!) <sup>*</sup>
-            </label>
-            <input class="form-control order-input-personal" value="@Model.Phone" type="tel" pattern="+375 29 123-45-67" placeholder="+375 29 123-45-67" required />
+            <label>Телефон (обратите внимание на формат!) <sup>*</sup></label>
+            @Html.TextBoxFor(x => x.Phone, new { @class = "form-control" })
+            @*<input class="form-control order-input-personal" value="@Model.Phone" type="tel" pattern="+375 29 123-45-67" placeholder="+375 29 123-45-67" required />*@
         </p>
     </fieldset>
-    <fieldset>
-        <legend>
-            Служба доставки
-        </legend>
-        <div>
-            @*class="custom-control-input"*@
-            <label for="pickup">                
-                <input type="radio" value="@Model.TypeDelivery" name="pickup" checked />
-                <b>
-                    Самовывоз
-                </b>
+
+    <fieldset class="form-group group1">
+        <legend> Служба доставки </legend>
+        <div class="form-check">
+            <label class="form-check-label">
+                @Html.RadioButton("TypeDelivery", "pickup", true)
+                @*<input type="radio" value="pickup" name="delivery" checked="" />*@
+                <b> Самовывоз </b>
             </label>
-            <p>
-                Стоимость 0,00 руб.
-                <br />
-                Вы можете самостоятельно забрать заказ из нашего магазина.
-            </p>
+            <br />
+            Стоимость 0,00 руб.
+            <br />
+            Вы можете самостоятельно забрать заказ из нашего магазина.
         </div>
-        <div>
-            <label for="cuurier">
-                <input type="radio" value="@Model.TypeDelivery" name="courier" />
-                <b>
-                    Курьером (по Минску, платно)
-                </b>
+        <div class="form-check">
+            <label class="form-check-label">
+                @Html.RadioButton("TypeDelivery", "courier", false)
+                @*<input type="radio" value="courier" name="delivery" />*@
+                <b> Курьером (по Минску, платно)</b>
             </label>
-            <p>
-                Стоимость 5,00 руб.
-                <br />
-                При сумме покупки свыше 50 бел. рублей доставка бесплатна.
-            </p>
+            <br />
+            Стоимость 5,00 руб.
+            <br />
+            При сумме покупки свыше 50 бел. рублей доставка бесплатна.
         </div>
-        <div>
-            <label for="mailing">
-                <input type="radio" value="@Model.TypeDelivery" name="mailing" />
-                <b>
-                    Почтовая отправка
-                </b>
+        <div class="form-check">
+            <label class="form-check-label">
+                @Html.RadioButton("TypeDelivery", "mailing", false)
+                @*<input type="radio" value="mailing" name="delivery" />*@
+                <b> Почтовая отправка </b>
             </label>
-            <p>
-                Стоимость почтовой доставки просчитывается индивидуально для каждого заказа в зависимости от веса посылки
-            </p>
+            <br />
+            Стоимость почтовой доставки просчитывается индивидуально для каждого заказа в зависимости от веса посылки
         </div>
     </fieldset>
-    <fieldset>
-        <legend>
-            Платежная система
-        </legend>
-        <div>
-            <label for="cash">
-                <input type="radio" value="@Model.TypePaySystem" name="cash" checked />
+
+    <fieldset class="form-group group2">
+        <legend> Платежная система </legend>
+        <div class="form-check">
+            <label class="form-check-label">
+                @Html.RadioButton("TypePaySystem", "cash", true)              
+                @*<input type="radio" value="cash" name="pay-system" checked="" />*@
                 <b> Наличный расчет</b>
             </label>
         </div>
-        <div>
-            <label for="card">
-                <input type="radio" value="@Model.TypePaySystem" name="card" />
+        <div class="form-check">
+            <label class="form-check-label">
+                @Html.RadioButton("TypePaySystem", "card", false)
+                @*<input type="radio" value="card" name="pay-system" />*@
                 <b>Расчет банковской картой</b>
             </label>
-            <p>
-                Visa, MasterCard, American Express и Белкарт
-            </p>
+            <br />
+            Visa, MasterCard, American Express и Белкарт
         </div>
-        <div>
-            <label for="erip">
-                <input type="radio" value="@Model.TypePaySystem" name="erip" />
+        <div class="form-check">
+            <label class="form-check-label">
+                @Html.RadioButton("TypePaySystem", "erip", false)
+                @*<input type="radio" value="erip" name="pay-system" />*@
                 <b>Система 'Расчёт' (ЕРИП)</b>
             </label>
-            <p>
-                Система 'Расчет (ЕРИП)' позволяет произвести оплату в любом удобном для Вас месте, в удобное для Вас время, в удобном для Вас пункте банковского обслуживания – банкомате, инфокиоске, интернет-банке, кассе банков, с помощью мобильного банкинга и т.д. Вы можете осуществить платеж с использованием наличных денежных средств, электронных денег и банковских платежных карточек в пунктах банковского обслуживания банков, которые оказывают услуги по приему платежей, а также посредством инструментов дистанционного банковского обслуживания.
-            </p>
+            <br />
+            Система 'Расчет (ЕРИП)' позволяет произвести оплату в любом удобном для Вас месте, в удобное для Вас время, в удобном для Вас пункте банковского обслуживания – банкомате, инфокиоске, интернет-банке, кассе банков, с помощью мобильного банкинга и т.д. Вы можете осуществить платеж с использованием наличных денежных средств, электронных денег и банковских платежных карточек в пунктах банковского обслуживания банков, которые оказывают услуги по приему платежей, а также посредством инструментов дистанционного банковского обслуживания.
         </div>
     </fieldset>
-    <fieldset>
-        <legend>
-            Состав заказа
-        </legend>
+
+    <fieldset class="form-group">
+        <legend> Состав заказа </legend>
         @Model.Basket@Html.Action("CopyBasket", "Basket")
     </fieldset>
 
-    <fieldset>
-        <legend>
-            Дополнительная информация
-        </legend>
-
-        <span>
-            Комментарии к заказу:
-        </span>
-        @*@Html.TextArea(@Model.Comment, new { @class= "form-control" })*@
-        <textarea class="form-control" rows ="3"></textarea>
+    <fieldset class="form-group">
+        <legend>Дополнительная информация</legend>
+        <span>Комментарии к заказу:</span>
+        <textarea class="form-control" rows="3"></textarea>
     </fieldset>
-    <input type="submit" value="Оформить заказ" class="btn btn-success"/>
-</form>
+    <input class="btn btn-success" type="submit" value="Оформить заказ"  />
+}
 
 

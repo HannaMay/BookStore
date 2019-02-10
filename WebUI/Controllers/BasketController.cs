@@ -9,16 +9,10 @@ using WebUI.Models;
 
 namespace WebUI.Controllers
 {
-    public class BasketController : Controller, IOrderProcessor
+    public class BasketController : Controller
     {
         private IBookRepository repository;
-
         private IOrderProcessor orderProcessor;
-
-        public void ProcessOrder(Basket basket, DeliveryDetails delivery)
-        {
-            throw new NotImplementedException();
-        }
 
         public BasketController(IBookRepository repo, IOrderProcessor order)
         {
@@ -74,20 +68,18 @@ namespace WebUI.Controllers
             if (basket.GetGoods.Count() == 0)
             {
                 ModelState.AddModelError("", "Извините корзина пуста!");
-
             }
 
-            if (ModelState.IsValid)
+            if (ViewData.ModelState.IsValid)
             {
                 orderProcessor.ProcessOrder(basket, delivery);
                 basket.ResetBasket();
-                return View("Complited");
+                return View("Completed");
             }
             else
-            {
+            { 
                 return View(new DeliveryDetails());
-            }
-            
+            }                 
         }
 
         public PartialViewResult CopyBasket(Basket basket, string returnUrl)

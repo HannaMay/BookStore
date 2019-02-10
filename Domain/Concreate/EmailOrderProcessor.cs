@@ -1,5 +1,4 @@
 ﻿using Domain.Abstract;
-using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +11,18 @@ namespace Domain.Concreate
 {
     public class EmailSettings
     {
-        public string MailToAddress = "bookstore_order@gmail.ru";
+        public string MailToAddress = "orders@gmail.ru";
         public string MailFormAddress = "bookstore@gmail.com";
         public bool UseSsl = true;
         public string UserName = "MySmtpUsername";
         public string Password = "MySmtpPassword";
+        public string ServerName = "smtp.example.com";
         public int ServerPort = 587;
         public bool WriteAsFile = true;
-        public string FileLocation = @"e:\hannika\univer\asp.net";
-        public string ServerName = "smtp@gmail.com";
+        public string FileLocation = @"e:\mails";          
     }
 
+    //реализация интерфейса для обработки заказа и отпрпки данных админу
     public class EmailOrderProcessor : IOrderProcessor
     {
         private EmailSettings emailSettings;
@@ -31,7 +31,7 @@ namespace Domain.Concreate
         {
             emailSettings = email;
         }
-        public void ProcessOrder(Basket basket, DeliveryDetails delivery)
+        public void ProcessOrder(Entities.Basket basket, Entities.DeliveryDetails delivery)
         {
             using (var SmtpClient = new SmtpClient())
             {
@@ -65,10 +65,20 @@ namespace Domain.Concreate
                     .AppendLine(delivery.FIO)
                     .AppendLine(delivery.Phone)
                     .AppendLine(delivery.Email)
-                    .AppendLine(delivery.Basket.GetGoods.ToString())
                     .AppendLine(delivery.TypeDelivery)
                     .AppendLine(delivery.TypePaySystem)
                     .AppendLine("-----");
+
+                //body.AppendFormat("Общая стоимость: {0}", basket.TotalSum())
+                //    .AppendLine("-----")
+                //    .AppendLine("Доставка:")
+                //    .AppendLine(delivery.FIO)
+                //    .AppendLine(delivery.Phone)
+                //    .AppendLine(delivery.Email)
+                //    .AppendLine(delivery.Basket.GetGoods.ToString())
+                //    .AppendLine(delivery.TypeDelivery)
+                //    .AppendLine(delivery.TypePaySystem)
+                //    .AppendLine("-----");
 
                 MailMessage mailMessage = new MailMessage(
                     emailSettings.MailFormAddress, 

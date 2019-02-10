@@ -211,6 +211,7 @@
     <Content Include="Views\Basket\Summary.cshtml" />
     <Content Include="Views\Basket\Checkout.cshtml" />
     <Content Include="Views\Basket\CopyBasket.cshtml" />
+    <Content Include="Views\Basket\Completed.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

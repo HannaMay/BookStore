@@ -142,3 +142,34 @@ span, p, .lead {
     min-width: 20%;
     max-width: 65%;
 }
+
+.field-validation-error {
+    color: red;
+}
+
+.field-validation-valid {
+    display: none;
+    color: green;
+}
+
+.input-validatiion-error {
+    border: 1px solid red;
+    border-radius: 5px;
+    background: rgba(255, 0, 0, 0.5);
+}
+
+.input-validatiion-valid {
+    display: none;
+    border: 1px solid green;
+    border-radius: 5px;
+    background: rgba(0, 255, 0, 0.5);
+}
+
+.validation-summary-error {
+    font-weight: bold;
+    color: red;
+}
+
+.validation-summary-error {
+    display: none;
+}
