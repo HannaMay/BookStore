@@ -36,7 +36,7 @@
         <div class="form-check">
             <label class="form-check-label">
                 @Html.RadioButton("TypeDelivery", "pickup", true)
-                @*<input type="radio" value="pickup" name="delivery" checked="" />*@
+                @*<input type="radio" value="pickup" name="TypeDelivery" checked="" />*@
                 <b> Самовывоз </b>
             </label>
             <br />
@@ -47,7 +47,7 @@
         <div class="form-check">
             <label class="form-check-label">
                 @Html.RadioButton("TypeDelivery", "courier", false)
-                @*<input type="radio" value="courier" name="delivery" />*@
+                @*<input type="radio" value="courier" name="TypeDelivery" />*@
                 <b> Курьером (по Минску, платно)</b>
             </label>
             <br />
@@ -58,7 +58,7 @@
         <div class="form-check">
             <label class="form-check-label">
                 @Html.RadioButton("TypeDelivery", "mailing", false)
-                @*<input type="radio" value="mailing" name="delivery" />*@
+                @*<input type="radio" value="mailing" name="TypeDelivery" />*@
                 <b> Почтовая отправка </b>
             </label>
             <br />
@@ -70,15 +70,15 @@
         <legend> Платежная система </legend>
         <div class="form-check">
             <label class="form-check-label">
-                @Html.RadioButton("TypePaySystem", "cash", true)              
-                @*<input type="radio" value="cash" name="pay-system" checked="" />*@
+                @Html.RadioButton("TypePaySystem", "cash", true)
+                @*<input type="radio" value="cash" name="TypePaySystem" checked="" />*@
                 <b> Наличный расчет</b>
             </label>
         </div>
         <div class="form-check">
             <label class="form-check-label">
                 @Html.RadioButton("TypePaySystem", "card", false)
-                @*<input type="radio" value="card" name="pay-system" />*@
+                @*<input type="radio" value="card" name="TypePaySystem" />*@
                 <b>Расчет банковской картой</b>
             </label>
             <br />
@@ -86,8 +86,8 @@
         </div>
         <div class="form-check">
             <label class="form-check-label">
-                @Html.RadioButton("TypePaySystem", "erip", false)
-                @*<input type="radio" value="erip" name="pay-system" />*@
+                @*@Html.RadioButton("TypePaySystem", "erip", false)*@
+                <input type="radio" value="erip" name="TypePaySystem" />
                 <b>Система 'Расчёт' (ЕРИП)</b>
             </label>
             <br />
