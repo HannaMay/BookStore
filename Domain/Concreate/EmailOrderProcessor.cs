@@ -19,7 +19,7 @@ namespace Domain.Concreate
         public string ServerName = "smtp.example.com";
         public int ServerPort = 587;
         public bool WriteAsFile = true;
-        public string FileLocation = @"e:\mails";          
+        public string FileLocation = @"E:\Hannika\Univer\ASP.net\BookStore\Mails";          
     }
 
     //реализация интерфейса для обработки заказа и отпрпки данных админу
@@ -56,18 +56,20 @@ namespace Domain.Concreate
                 foreach (var item in basket.GetGoods)
                 {
                     var subTotal = item.Book.Price * item.Quantity;
-                    body.AppendFormat("{0} x {1} (итого: {2:c}", item.Quantity, item.Book.Name, subTotal);
+                    body.AppendFormat("{0} x {1} (итого: {2:c})\n", item.Quantity, item.Book.Name, subTotal);
                 }
 
-                body.AppendFormat("Общая стоимость: {0}", basket.TotalSum())
-                    .AppendLine("-----")
-                    .AppendLine("Доставка:")
+                body.AppendFormat("\n\nОбщая стоимость: {0} руб.", basket.TotalSum())
+                    .AppendLine("\n-----")
+                    .AppendLine("Параметры заказа:")
                     .AppendLine(delivery.FIO)
                     .AppendLine(delivery.Phone)
                     .AppendLine(delivery.Email)
                     .AppendLine(delivery.TypeDelivery)
                     .AppendLine(delivery.TypePaySystem)
-                    .AppendLine("-----");
+                    .AppendLine("-----")
+                    .AppendLine("Дополнение к заказу:")
+                    .AppendLine(delivery.Comment);
 
                 //body.AppendFormat("Общая стоимость: {0}", basket.TotalSum())
                 //    .AppendLine("-----")

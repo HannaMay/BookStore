@@ -35,9 +35,9 @@
         <legend> Служба доставки </legend>
         <div class="form-check">
             <label class="form-check-label">
-                @Html.RadioButton("TypeDelivery", "pickup", true)
+                @Html.RadioButton("TypeDelivery", "Самовывоз", true)
                 @*<input type="radio" value="pickup" name="TypeDelivery" checked="" />*@
-                <b> Самовывоз </b>
+                <b>Самовывоз</b>
             </label>
             <br />
             Стоимость 0,00 руб.
@@ -46,9 +46,9 @@
         </div>
         <div class="form-check">
             <label class="form-check-label">
-                @Html.RadioButton("TypeDelivery", "courier", false)
+                @Html.RadioButton("TypeDelivery", "Курьером (по Минску, платно)", false)
                 @*<input type="radio" value="courier" name="TypeDelivery" />*@
-                <b> Курьером (по Минску, платно)</b>
+                <b>Курьером (по Минску, платно)</b>
             </label>
             <br />
             Стоимость 5,00 руб.
@@ -57,9 +57,9 @@
         </div>
         <div class="form-check">
             <label class="form-check-label">
-                @Html.RadioButton("TypeDelivery", "mailing", false)
+                @Html.RadioButton("TypeDelivery", "Почтовая отправка", false)
                 @*<input type="radio" value="mailing" name="TypeDelivery" />*@
-                <b> Почтовая отправка </b>
+                <b>Почтовая отправка</b>
             </label>
             <br />
             Стоимость почтовой доставки просчитывается индивидуально для каждого заказа в зависимости от веса посылки
@@ -70,14 +70,14 @@
         <legend> Платежная система </legend>
         <div class="form-check">
             <label class="form-check-label">
-                @Html.RadioButton("TypePaySystem", "cash", true)
+                @Html.RadioButton("TypePaySystem", "Наличный расчет", true)
                 @*<input type="radio" value="cash" name="TypePaySystem" checked="" />*@
-                <b> Наличный расчет</b>
+                <b>Наличный расчет</b>
             </label>
         </div>
         <div class="form-check">
             <label class="form-check-label">
-                @Html.RadioButton("TypePaySystem", "card", false)
+                @Html.RadioButton("TypePaySystem", "Расчет банковской картой", false)
                 @*<input type="radio" value="card" name="TypePaySystem" />*@
                 <b>Расчет банковской картой</b>
             </label>
@@ -87,7 +87,7 @@
         <div class="form-check">
             <label class="form-check-label">
                 @*@Html.RadioButton("TypePaySystem", "erip", false)*@
-                <input type="radio" value="erip" name="TypePaySystem" />
+                <input type="radio" value="Система 'Расчёт' (ЕРИП)" name="TypePaySystem" />
                 <b>Система 'Расчёт' (ЕРИП)</b>
             </label>
             <br />
@@ -103,7 +103,8 @@
     <fieldset class="form-group">
         <legend>Дополнительная информация</legend>
         <span>Комментарии к заказу:</span>
-        <textarea class="form-control" rows="3"></textarea>
+        @Html.TextArea("Comment", null, new { @class = "form-control", @rows = "3" })
+        @*<textarea class="form-control" rows="3"></textarea>*@
     </fieldset>
     <input class="btn btn-success" type="submit" value="Оформить заказ"  />
 }
