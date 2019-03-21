@@ -1,0 +1,49 @@
+﻿@model Domain.Entities.Book
+
+@{
+    ViewBag.Title = "Админ панель: редактирование товара";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    HtmlHelper.ClientValidationEnabled = false;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+}
+
+<div class="header-edit">
+    <h2 class="title-edit-book">
+        Редактирование книги "@Model.Name"
+    </h2>     
+</div>
+
+<div class="edit-block">
+    @using (Html.BeginForm())
+    {
+        //эта штука как 2 вариант (шаблон) для редактирования но выглядит слишком ущербно чтобы использовать
+        //@Html.EditorForModel()
+        <div class="edit-control">
+            <input type="submit" value="Сохранить" class="btn btn-info btn-edit-save" />
+            @Html.ActionLink("Отмена", "Index", null, new { @class = "btn btn-danger" })
+        </div>
+
+        @Html.HiddenFor(m => m.BookId)
+
+        foreach (var property in ViewData.ModelMetadata.Properties)
+        {
+            if (property.PropertyName != "BookId")
+            {
+            <div class="form-group">
+                <label>@(property.DisplayName ?? property.PropertyName)</label>
+                @if (property.PropertyName == "Description")
+                {
+                    @Html.TextArea(property.PropertyName, null, new { @class = "form-control", rows = 5 })
+                }
+                else
+                {
+                    @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                }
+                @*@Html.ValidationSummary(property.PropertyName)*@
+            </div>
+            }
+        }
+     }
+</div>
+
+

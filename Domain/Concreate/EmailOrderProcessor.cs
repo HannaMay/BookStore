@@ -56,7 +56,7 @@ namespace Domain.Concreate
                 foreach (var item in basket.GetGoods)
                 {
                     var subTotal = item.Book.Price * item.Quantity;
-                    body.AppendFormat("{0} x {1} (итого: {2:c})\n", item.Quantity, item.Book.Name, subTotal);
+                    body.AppendFormat("{0} x {1} (итого: {2} руб.)\n", item.Quantity, item.Book.Name, subTotal);
                 }
 
                 body.AppendFormat("\n\nОбщая стоимость: {0} руб.", basket.TotalSum())

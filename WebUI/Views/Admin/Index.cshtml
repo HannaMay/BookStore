@@ -25,18 +25,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Author)
                 </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Genre)
-                </th>*@
-                @*<th>
-                    @Html.DisplayNameFor(model => model.Publisher)
-                </th>*@
-                @*<th>
-                    @Html.DisplayNameFor(model => model.PublishYear)
-                </th>*@
                 <th class="text-right">
                     @Html.DisplayNameFor(model => model.Price)
                 </th>
@@ -49,7 +37,7 @@
             {
             <tr>
                 <td class="text-right">
-                    @Html.DisplayFor(modelItem => item.BookId)
+                    @item.BookId
                 </td>
                 <td>
                     @Html.ActionLink(item.Name, "Edit", new { item.BookId})
@@ -57,20 +45,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Author)
                 </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
-                </td>*@
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.Publisher)
-                </td>*@
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.PublishYear)
-                </td>*@
                 <td class="text-right">
-                    @item.Price.ToString("# руб.")
+                    @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td class="text-center">
                     @using (Html.BeginForm("Delete", "Admin"))

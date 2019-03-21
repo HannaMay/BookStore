@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using WebUI.Controllers;
 using WebUI.Models;
 
@@ -37,6 +38,89 @@ namespace UnitTests
             Assert.AreEqual(result.Count(), 5);
             Assert.AreEqual(result[0].Name, "Book1");
             Assert.AreEqual(result[1].Name, "Book2");
+        }
+
+        [TestMethod]
+        public void Can_Edit_Book()
+        {
+            //организация (arrange)
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(m => m.Books).Returns(new List<Book>
+            {
+                new Book { BookId = 1, Name = "Book1"},
+                new Book { BookId = 2, Name = "Book2"},
+                new Book { BookId = 3, Name = "Book3"},
+                new Book { BookId = 4, Name = "Book4"},
+                new Book { BookId = 5, Name = "Book5"}
+            });
+            AdminController controller = new AdminController(mock.Object);
+
+            //действие (act)
+            Book book1 = controller.Edit(1).ViewData.Model as Book;
+            Book book2 = controller.Edit(2).ViewData.Model as Book;
+            Book book3 = controller.Edit(3).ViewData.Model as Book;
+
+            List<Book> result = ((IEnumerable<Book>)controller.Index().ViewData.Model).ToList();
+
+            //утверждение (assert)            
+            Assert.AreEqual(1, book1.BookId);
+            Assert.AreEqual(2, book2.BookId);
+            Assert.AreEqual(3, book3.BookId);
+        }
+
+        [TestMethod]
+        public void Cannot_Edit_Noexisting_Book()
+        {
+            //организация (arrange)
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(m => m.Books).Returns(new List<Book>
+            {
+                new Book { BookId = 1, Name = "Book1"},
+                new Book { BookId = 2, Name = "Book2"},
+                new Book { BookId = 3, Name = "Book3"},
+                new Book { BookId = 4, Name = "Book4"},
+                new Book { BookId = 5, Name = "Book5"}
+            });
+            AdminController controller = new AdminController(mock.Object);
+
+            //действие (act)
+            Book result = controller.Edit(7).ViewData.Model as Book;
+            
+            //утверждение (assert)            
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void Can_Save_Valid_Canges()
+        {
+            //организация (arrange)
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            AdminController controller = new AdminController(mock.Object);
+            Book book = new Book {Name = "Book1"};
+
+            //действие (act)
+            ActionResult result = controller.Edit(book);
+
+            //утверждение (assert)            
+            mock.Verify(m => m.SaveBook(book));
+            Assert.IsNotInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Can_Save_Invalid_Canges()
+        {
+            //организация (arrange)
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            AdminController controller = new AdminController(mock.Object);
+            Book book = new Book { Name = "Book1" };
+            controller.ModelState.AddModelError("error", "error");
+
+            //действие (act)
+            ActionResult result = controller.Edit(book);
+
+            //утверждение (assert)            
+            mock.Verify(m => m.SaveBook(It.IsAny<Book>()), Times.Never());
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
     }
 }
